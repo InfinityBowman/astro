@@ -4,7 +4,7 @@ const { Client } = pkg;
 export async function GET({ request }) {
   try {
     const client = new Client({
-      host: "localhost",
+      host: "172.21.219.188",
       user: "jacobmaynard",
       password: "dumbInfinity42$",
       database: "vst_rating_db",
