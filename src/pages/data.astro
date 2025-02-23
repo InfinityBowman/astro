@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-const response = await fetch('http://localhost:8080/api/data');
+const response = await fetch('http://172.21.219.188:8080/api/data');
 if (!response.ok) {
   throw new Error(`Failed to fetch data: ${response.statusText}`);
 }
