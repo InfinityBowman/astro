@@ -1,0 +1,39 @@
+---
+const { posts } = Astro.props;
+const postsData = JSON.stringify(posts);
+---
+
+<!-- Store the posts prop as a data attribute. -->
+<astro-button data-posts={postsData}>
+  <button id="filter-button">Click me</button>
+</astro-button>
+
+<script>
+  class AstroButton extends HTMLElement {
+    connectedCallback() {
+      // Read the posts from the data attribute.
+      const posts = JSON.parse(this.dataset.posts!);
+
+      const button = this.querySelector("button");
+      if (!button) return;
+      button.addEventListener("click", () => {
+        console.log("clicked in", posts);
+        const tag = "astro";
+        const filteredPosts = posts.filter((post: any) =>
+          post.frontmatter.tags?.includes(tag),
+        );
+        console.log(filteredPosts);
+        const html = filteredPosts
+          .map(
+            (post: any) =>
+              `<li><a href="${post.url}">${post.frontmatter.title}</a></li>`,
+          )
+          .join("");
+        console.log(html);
+        document.querySelector("#filtered-posts")!.innerHTML = html;
+      });
+    }
+  }
+
+  customElements.define("astro-button", AstroButton);
+</script>
