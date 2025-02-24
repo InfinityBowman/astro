@@ -32,7 +32,7 @@ jobs:
           SERVER_PATH: ${{ secrets.SERVER_PATH }}
         run: |
           mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan $SERVER_HOST >> ~/.ssh/known_hosts
           rsync -avz --delete-after ./dist/ $SERVER_USER@$SERVER_HOST:$SERVER_PATH
