@@ -28,11 +28,15 @@ jobs:
         env:
           SERVER_USER: ${{ secrets.SERVER_USER }}
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          WSL_USER: ${{ secrets.WSL_USER }}
+          WSL_HOST: ${{ secrets.WSL_HOST }}
         run: |
           ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_HOST << 'EOF'
-            cd /home/jacob/astro
-            git pull origin main
-            bun install
-            bun run build
-            sudo systemctl restart nginx
+            ssh $WSL_USER@$WSL_HOST << 'EOWSL'
+              cd /home/jacob/astro
+              git pull origin main
+              bun install
+              bun run build
+              sudo systemctl restart nginx
+            EOWSL
           EOF
